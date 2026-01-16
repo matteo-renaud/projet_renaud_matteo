@@ -1,0 +1,52 @@
+<div *ngIf="pollution$ | async as pollution; else loadingTemplate">
+
+    <p-card class="xl:col-6 xl:col-offset-3 shadow-4 col-12">
+        <ng-template #header>
+            <h1 class="text-center">{{pollution.titre}} </h1>                       
+        </ng-template>
+
+        <div class="col-12 grid">
+            <div class="lg:col-6 col-12">
+                <p>
+                    <i class="pi pi-map-marker mr-1"></i>
+                    <span class="font-bold">Type pollution : </span>
+                    {{pollution.typePollution | typePollutionLabel}}
+                </p>
+                <p><i class="pi pi-globe mr-1"></i>
+                    <span class="font-bold">Date observation : </span>
+                    {{pollution.dateObservation  | date:'dd/MM/yyyy' }}
+                </p>
+                <p><i class="pi pi-calendar mr-1"></i>
+                    <span class="font-bold">Lieu : </span>
+                    {{pollution.lieu}}
+                </p>
+                <p><i class="pi pi-user mr-1"></i>
+                    <span class="font-bold">Découvert par : </span>
+                    {{pollution.prenomDecouvreur }} {{pollution.nomDecouvreur}}
+                </p>
+            </div>
+            <div class="lg:col-6 col-12">
+                @if(pollution.photoUrl) {
+                    <p-image [src]="pollution.photoUrl" class="h-12rem" preview></p-image>
+                }
+            </div>
+        </div>
+   
+        <p-fieldset legend="Description">
+            <p class="m-0">{{pollution.description}}</p>
+        </p-fieldset>
+            
+        <ng-template #footer class="p-0 m-0">
+            <div class="flex justify-content-end">
+                <i class="pi pi-compass mr-1 align-self-center"></i><p class="font-italic m-0">Latitude : {{pollution.latitude}} / Longitude : {{pollution.longitude}}</p>
+            </div>
+        </ng-template>
+    </p-card>
+
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="flex flex-column justify-content-center align-items-center min-h-screen">
+        <p-progressSpinner class="w-4rem h-4rem" strokeWidth="4" />
+    </div>
+</ng-template>

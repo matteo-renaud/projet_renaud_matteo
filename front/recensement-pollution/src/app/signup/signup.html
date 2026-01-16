@@ -1,0 +1,70 @@
+<div>
+  <p-card class="col-12 xl:col-6 xl:col-offset-3">
+    
+    <h1 class="text-center">Création de compte</h1>
+
+    <form [formGroup]="formSignup" (ngSubmit)="signup()">
+
+    <div class="col-12 grid">
+        <div class="grid col-12 lg:col-4">
+            <label for="nom">Nom*</label>
+            <input pInputText id="nom" placeholder="Votre nom" formControlName="nom" class="col-12"/>
+            @if (formSignup.get('nom')?.invalid && submitted) {
+                <p-message severity="error" variant="simple" size="small" class="col-12">Champ requis</p-message>
+            }
+        </div>
+
+        <div class="grid col-12 lg:col-4 lg:mx-1">
+            <label for="prenom">Prénom*</label>
+            <input pInputText id="prenom" placeholder="Votre prenom" formControlName="prenom" class="col-12"/>
+            @if (formSignup.get('prenom')?.invalid && submitted) {
+                <p-message severity="error" variant="simple" size="small" class="col-12">Champ requis</p-message>
+            }
+        </div>
+
+        <div class="grid col-12 lg:col-4">
+            <label for="login">Login*</label>
+            <input pInputText id="login" placeholder="Votre login" formControlName="login" class="col-12"/>
+            @if (formSignup.get('login')?.invalid && submitted) {
+                <p-message severity="error" variant="simple" size="small" class="col-12">Champ requis</p-message>
+            }
+        </div>
+    </div>
+   
+    <div class="col-12 grid">
+        <label for="email" class="lg:col-12 lg:text-center">Email*</label>
+        <input pInputText id="email" placeholder="Votre email" formControlName="email" class="col-12"/>
+        @if (formSignup.get('email')?.invalid && submitted) {
+            <p-message severity="error" variant="simple" size="small" class="col-12">Email invalide</p-message>
+        }
+    </div>
+
+    <div class="col-12 grid">
+        <div class="grid col-12 lg:col-6 lg:mr-1">
+            <label for="password">Mot de passe*</label>
+            <input pInputText id="password" type="password" pPassword placeholder="Votre mot de passe" formControlName="password" class="col-12"/>
+            @if (formSignup.get('password')?.invalid && submitted) {
+                <p-message severity="error" variant="simple" size="small" class="col-12">Champ requis</p-message>
+            }
+        </div>
+
+        <div class="grid col-12 lg:col-6">
+            <label for="confirmPassword">Confirmation mot de passe*</label>
+            <input pInputText id="confirmPassword" type="password" pPassword placeholder="Votre confirmation de mot de passe" formControlName="confirmPassword" class="col-12"/>
+            @if (formSignup.hasError('passwordMismatch') && submitted) {
+                <p-message severity="error" variant="simple" size="small" class="col-12">Les mots de passes ne correspondent pas</p-message>
+            }
+        </div>
+    </div>
+
+    <div class="flex justify-content-center mb-2">
+        <p-button label="Créer mon compte" icon="pi pi-sign-in" class="p-button-success" type="submit" [disabled]="isLoading"/>
+      </div>
+    </form>
+
+    <div class="text-center">
+      <span>Déjà un compte ? </span> <a [routerLink]="['/signin']">Connectez-vous</a>
+    </div>
+
+  </p-card>
+</div>

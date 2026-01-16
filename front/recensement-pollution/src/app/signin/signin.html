@@ -1,0 +1,33 @@
+<div>
+    <p-card class="col-12 xl:col-4 xl:col-offset-4">
+    
+    <h1 class="text-center">Connexion</h1>
+
+    <form [formGroup]="formSignin" (ngSubmit)="signin()">
+      <div class="grid">
+        <label for="login" class="col-12 text-center">Login</label>
+        <input pInputText id="login" placeholder="Votre login" formControlName="login" class="col-12"/>
+        @if (formSignin.get('login')?.invalid && submitted) {
+            <p-message severity="error" variant="simple" size="small" class="col-12">Champ requis</p-message>
+        }
+      </div>
+
+      <div class="grid grid my-2">
+        <label for="password" class="col-12 text-center">Mot de passe</label>
+        <input pInputText id="password" type="password" pPassword placeholder="Votre mot de passe" formControlName="password" class="col-12"/>
+        @if (formSignin.get('password')?.invalid && submitted) {
+            <p-message severity="error" variant="simple" size="small" class="col-12">Champ requis</p-message>
+        }
+      </div>
+
+      <div class="flex justify-content-center mb-2">
+        <p-button label="Se connecter" icon="pi pi-sign-in" class="p-button-success" type="submit" [disabled]="isLoading" />
+      </div>
+    </form>
+
+    <div class="text-center">
+      <span>Pas encore de compte ? </span> <a [routerLink]="['/signup']">Inscrivez-vous</a>
+    </div>
+
+  </p-card>
+</div>

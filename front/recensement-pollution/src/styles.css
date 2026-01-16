@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* En mode téléphone, tous les labels des boutons sont masqués pour gagner de la place.
+Ne sont visible que les icônes */
+@media (max-width: 768px) {
+  .p-button-label {
+    display: none !important;
+  }
+}

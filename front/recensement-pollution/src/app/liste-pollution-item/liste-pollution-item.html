@@ -1,0 +1,50 @@
+<p-confirmdialog />
+<p-fieldset [legend]="pollution.titre">
+    <div class="grid grid-nogutter">
+
+    <div class="md:col-8 col-12">
+        @if(isFavoris && isUtilisateurConnecte()) {
+            <p-button (click)="removeFromFavoris()" icon="pi pi-star-fill" styleClass="mr-2" severity="help"/>
+        } @else if(isUtilisateurConnecte()) {
+            <p-button (click)="addToFavoris(pollution.id)" icon="pi pi-star" class="mr-2" severity="secondary"/>
+        }
+        <p>
+            <i class="pi pi-map-marker text-primary mr-1"></i>
+            <span class="font-bold">Lieu :</span> {{ pollution.lieu }}
+        </p>
+        <p>
+            <i class="pi pi-globe text-green-500 mr-1"></i>
+            <span class="font-bold">Type pollution :</span> {{ pollution.typePollution | typePollutionLabel }}
+        </p>
+        <p>
+            <i class="pi pi-calendar text-teal-500 mr-1"></i>
+            <span class="font-bold">Date observation :</span> {{ pollution.dateObservation | date:'dd/MM/yyyy' }}
+        </p>
+        <p>
+            <i class="pi pi-user text-green-500 mr-1"></i>
+            <span class="font-bold">Découvert par : </span> {{pollution.prenomDecouvreur }} {{pollution.nomDecouvreur}}
+        </p>
+    </div>
+
+    <div class="md:col-4 col-12">
+        @if (pollution.photoUrl) {
+            <p-image [src]="pollution.photoUrl" class="h-8rem" preview />
+        }
+    </div>
+
+    <div class="col-12 flex justify-content-between mt-2">
+        <div>
+            <p-button label="Consulter" severity="primary" icon="pi pi-eye" [routerLink]="['/pollution/read', pollution.id]" class="mr-2" />
+            @if(utilisateurConnecte()?.id && utilisateurConnecte()?.id === pollution.idDecouvreur) {
+                <p-button label="Modifier" severity="info" icon="pi pi-pencil" [routerLink]="['/pollution/edit', pollution.id]" />
+            }
+        </div>
+        <div>
+            @if(utilisateurConnecte()?.id && utilisateurConnecte()?.id === pollution.idDecouvreur) {
+                <p-button (click)="deletePollution(pollution.id)" label="Supprimer" severity="danger" icon="pi pi-trash" />
+            }
+        </div>
+    </div>
+            
+    </div>
+</p-fieldset>

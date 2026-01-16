@@ -1,0 +1,34 @@
+<div class="w-full bg-white p-2 border-round mb-3 grid">
+
+    <div class="lg:col-6 col-12 flex justify-content-between">
+        <div class="flex">
+            <p-button label="Accueil" icon="pi pi-home" severity="info" class="button-rounded button-outlined mr-2" [routerLink]="['/']" />
+            <i class="pi pi-cloud text-3xl mr-2 align-self-center"></i>
+            <span class="text-bold lg:text-3xl align-self-center text-xl">Recensement Pollution</span>
+        </div>
+        @if(isUtilisateurConnect()) {
+            <div class="flex align-items-center justify-content-center p-2 favoris-badge" (click)="goToFavoris()">
+                <i class="pi pi-star-fill star mr-2"></i>
+                <span class="count">{{ nbFavoris() }} favoris</span>
+            </div>
+        }
+    </div>
+
+    <div class="lg:col-6 col-12">
+        <div class="flex justify-content-between lg:justify-content-end">       
+            
+            @if(utilisateurConnecte()) {
+                <p class="m-0 p-0 flex align-self-center mx-2">Login : {{utilisateurConnecte()!.login}}</p>
+                <p-splitbutton label="Déconnexion" icon="pi pi-sign-out" (onClick)="logout()" [model]="items" />       
+            } @else {
+                <p-button label="S'authentifier" icon="pi pi-user" [routerLink]="['/signin']" />  
+            }
+
+        </div>
+    </div>
+
+</div>
+<p-confirmdialog />
+<p-toast />
+<router-outlet />
+

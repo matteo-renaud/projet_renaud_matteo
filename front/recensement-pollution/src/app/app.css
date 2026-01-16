@@ -1,0 +1,28 @@
+::ng-deep .p-card-header {
+  background-color: #e3f2fd;
+  padding: 0.75rem;
+  border-radius: 4px 4px 0 0;
+}
+
+.favoris-badge {
+  cursor: pointer;
+  background-color: #fff9c4;
+  border: 1px solid #fdd835;
+  border-radius: 20px;
+  transition: transform 0.2s;
+}
+
+.favoris-badge:hover {
+  transform: scale(1.1);
+}
+
+.star {
+  color: #fbc02d;
+  font-size: 1.4rem;
+}
+
+.count {
+  font-weight: bold;
+  color: #f57f17;
+  font-size: 1.2rem;
+}

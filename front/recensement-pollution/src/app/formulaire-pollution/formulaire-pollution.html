@@ -1,0 +1,94 @@
+<div class="w-full h-full flex">
+    <p-toast />
+    <p-card  class="text-center justify-content-center xl:col-6 xl:col-offset-3 shadow-4">  
+        <ng-template #header>
+            <h1>{{ isModeCreation ? 'Recenser une nouvelle pollution' : 'Modifier une pollution'}}</h1>
+        </ng-template>
+
+        @if(isLoading) {
+            <div class="flex justify-content-center align-items-center min-h-screen">
+                <p-progressSpinner class="w-4rem h-4rem" strokeWidth="4" />
+            </div>
+        } @else {
+            <form [formGroup]="formPollution" (ngSubmit)="onSubmit()">
+
+                <div class="grid ">
+
+                    <div class="col-12 grid pb-2">
+                        <label class="col-12 font-semibold" for="titre">Titre*</label>
+                        <input pInputText type="text" class="w-full" name="titre" formControlName="titre" />
+                        @if (formPollution.get('titre')?.invalid && isSubmitted) {
+                            <p-message severity="error" variant="simple" size="small" class="col-12">Champ requis</p-message>
+                        }
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <label for="typePollution" class="mr-2 font-semibold">Type pollution*</label>                       
+                        <p-select formControlName="typePollution" class="w-full" [options]="typesPollution" placeholder="Choisir un type de pollution"  />
+                        @if (formPollution.get('typePollution')?.invalid && isSubmitted) {
+                            <p-message severity="error" variant="simple" size="small" class="col-12 m-0 p-0">Champ requis</p-message>
+                        }
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <label for="date" class="font-semibold">Date*</label>
+                        <p-datepicker dateFormat="dd/mm/yy" name="date" formControlName="date" class="w-full block" />
+                        @if (formPollution.get('date')?.invalid && isSubmitted) {
+                            <p-message severity="error" variant="simple" size="small" class="col-12 m-0 p-0">Champ requis (date)</p-message>
+                        }
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <label for="latitude" class="font-semibold">Latitude*</label>
+                        <div>
+                            <p-inputnumber name="latitude" formControlName="latitude" inputId="locale-user" [maxFractionDigits]="4" class="w-full" />
+                            @if (formPollution.get('latitude')?.invalid && isSubmitted) {
+                                <p-message severity="error" variant="simple" size="small" class="col-12 m-0 p-0">Champ requis (Entre 90° et -90°)</p-message>
+                            }  
+                        </div>
+                    </div>  
+
+                    <div class="col-12 lg:col-6">
+                        <label for="longitude" class="font-semibold">Longitude*</label>
+                        <div>
+                            <p-inputnumber name="longitude" formControlName="longitude" inputId="locale-user" [maxFractionDigits]="4" class="w-full"/>
+                            @if (formPollution.get('longitude')?.invalid && isSubmitted) {
+                                <p-message severity="error" variant="simple" size="small" class="col-12 m-0 p-0">Champ requis (Entre 90° et -90°)</p-message>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="grid col-12">
+                        <label for="lieu" class="col-12 font-semibold">Lieu*</label>
+                        <input name="lieu" type="text" pInputText formControlName="lieu" class="col-12"/>
+                        @if (formPollution.get('lieu')?.invalid && isSubmitted) {
+                            <p-message severity="error" variant="simple" size="small" class="col-12 m-0 p-0">Champ requis</p-message>                         
+                        }
+                    </div>
+
+                    <div class="col-12 grid pb-2">
+                        <label for="description" class="col-12 font-semibold">Description*</label>
+                        <textarea name="description" class="col-12" pTextarea formControlName="description" ></textarea>
+                        @if (formPollution.get('description')?.invalid && isSubmitted) {
+                            <p-message severity="error" variant="simple" size="small" class="col-12 m-0 p-0">Champ requis</p-message>
+                        }
+                    </div>
+
+                    <div class="col-12 grid flex justify-content-center">
+                        <label for="lieu" class="font-semibold col-12">URL photo</label>
+                        <input name="photoUrl" type="text" pInputText formControlName="photoUrl" class="col-12"/>
+                       
+                        @if(photoUrlPreview) {
+                            <p-image [src]="photoUrlPreview" class="h-15rem w-15rem col-12" preview />
+                        }
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <p-button label="{{ isModeCreation ? 'Déclarer la pollution' : 'Modifier la pollution'}}" type="submit" icon="pi pi-check" [disabled]="isLoadingValidation" />
+                    </div>
+                </div>
+            </form>
+        }
+  
+    </p-card>
+</div>

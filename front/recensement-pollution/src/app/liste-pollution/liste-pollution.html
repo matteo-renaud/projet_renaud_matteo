@@ -1,0 +1,53 @@
+<div class="h-full w-full grid">
+  <p-toast />
+  <p-confirmdialog />
+
+  <p-card class="xl:col-6 xl:col-offset-3 shadow-4 my-1 col-12">
+
+    <ng-template #header>
+      <div class="flex justify-content-between align-items-center">
+        <h1 class="m-0 text-center flex-grow-1">Liste des pollutions</h1>
+        @if(utilisateurConnecte()) {
+          <p-button label="Ajouter" severity="info" icon="pi pi-plus" [routerLink]="['/pollution/create']" />
+        }
+      </div>
+    </ng-template>
+
+    <div class="grid">
+      <div class="col-12 md:col-4">
+        <input (ngModelChange)="onTitreChange($event)" pInputText type="text" [(ngModel)]="filtreTitre" placeholder="Filtrer par titre" class="w-full" />
+      </div>
+
+      <div class="col-12 md:col-4">
+        <p-select (ngModelChange)="onTypeChange($event)" [(ngModel)]="filtreType" [options]="typePollutionOptions" optionLabel="label" optionValue="value" placeholder="Filtrer par type de pollution" [showClear]="true" class="w-full" />
+      </div>
+
+      <div class="col-12 md:col-4">
+        <input (ngModelChange)="onLieuChange($event)" pInputText type="text" [(ngModel)]="filtreLieu" placeholder="Filtrer par lieu" class="w-full" />
+      </div>
+
+      <div class="col-12 mt-2 flex justify-content-end">
+        <p-button (click)="resetFiltres()" label="Réinitialiser" icon="pi pi-refresh" severity="secondary" />
+      </div>
+    </div>
+
+    <div *ngIf="listePollution$ | async as listePollution; else loadingTemplate">
+
+      <div *ngFor="let pollution of listePollution">
+        <app-liste-pollution-item [pollution]="pollution" [utilisateurConnecteId]="utilisateurConnecte()?.id" 
+          [isFavoris]="isPollutionFavoris(pollution.id)" (onRemoveFromFavoris)="onRemovePollutionFromFavoris($event)"/>
+      </div>
+
+      <div class="flex justify-content-end">
+        <p class="font-italic m-0">{{ listePollution.length }} pollution(s)</p>
+      </div>
+
+    </div>
+
+    <ng-template #loadingTemplate>
+      <div class="flex justify-content-center align-items-center" style="min-height: 50vh;">
+        <p-progressSpinner class="w-4rem h-4rem" strokeWidth="4"></p-progressSpinner>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
